@@ -53,6 +53,8 @@ InstallLomorage() {
 
 	echo -e "${RealUserName} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
+    echo 'export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin' >> /home/$RealUserName/.bash_profile
+
 	echo root:${PASSWORD}| chpasswd
 	rm /root/.not_logged_in_yet
 	. /etc/default/cpufrequtils
@@ -74,7 +76,8 @@ InstallLomorage() {
         echo "deb https://lomoware.github.io/debian/buster buster main" | sudo tee /etc/apt/sources.list.d/lomoware.list
 
 	apt-get update
-        apt-get install lomo-base-lite lomo-vips lomo-backend lomo-web -y
+    apt-get install -y hdparm smartmontools vim unzip
+    apt-get install hd-idle lomo-base-lite lomo-vips lomo-backend lomo-web -y
 
 	# rootfs resize to 7.3G max and adding omv-initsystem to firstrun -- q&d but shouldn't matter
 	echo 15500000s >/root/.rootfs_resize
