@@ -100,6 +100,8 @@ InstallLomorage() {
 		https://raw.githubusercontent.com/python/cpython/9cd7e17640a49635d1c1f8c2989578a8fc2c1de6/Lib/weakref.py
 	fi
 
+    # set hostname
+    hostnamectl set-hostname `hostname`-lomorage
 	# clean up and force password change on first boot
 	chage -d 0 root
 } # InstallLomorage
