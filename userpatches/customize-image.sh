@@ -73,11 +73,17 @@ InstallLomorage() {
 	update-ca-certificates --fresh
 	wget -qO - https://raw.githubusercontent.com/lomoware/lomoware.github.io/master/debian/gpg.key | apt-key add -
 
-        echo "deb https://lomoware.github.io/debian/buster buster main" | sudo tee /etc/apt/sources.list.d/lomoware.list
+    echo "deb https://lomoware.github.io/debian/buster buster main" | sudo tee /etc/apt/sources.list.d/lomoware.list
 
 	apt-get update
     apt-get install -y hdparm smartmontools vim unzip
     apt-get install hd-idle lomo-base-lite lomo-vips lomo-backend lomo-web -y
+
+    # share
+    apt-get install samba samba-common-bin smbclient cifs-utils netatalk -y
+    cp /tmp/overlay/smb.conf /etc/samba/smb.conf
+    cp /tmp/overlay/afp.conf /etc/netatalk/afp.conf
+    (echo $PASSWORD;echo $PASSWORD) | smbpasswd -s -a $RealUserName
 
 	# rootfs resize to 7.3G max and adding omv-initsystem to firstrun -- q&d but shouldn't matter
 	echo 15500000s >/root/.rootfs_resize
@@ -100,8 +106,6 @@ InstallLomorage() {
 		https://raw.githubusercontent.com/python/cpython/9cd7e17640a49635d1c1f8c2989578a8fc2c1de6/Lib/weakref.py
 	fi
 
-    # set hostname
-    hostnamectl set-hostname `hostname`-lomorage
 	# clean up and force password change on first boot
 	chage -d 0 root
 } # InstallLomorage
