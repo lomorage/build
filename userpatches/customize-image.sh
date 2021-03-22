@@ -47,7 +47,7 @@ InstallLomorage() {
 	adduser --quiet --disabled-password --home /home/"$RealUserName" --gecos "$RealUserName" "$RealUserName"
 	(echo $PASSWORD;echo $PASSWORD;) | passwd "$RealUserName" >/dev/null 2>&1
 
-	for additionalgroup in sudo netdev audio video disk tty users games dialout plugdev input bluetooth systemd-journal ssh; do
+	for additionalgroup in sudo adm netdev audio video disk tty users games dialout plugdev input bluetooth systemd-journal ssh; do
 		usermod -aG ${additionalgroup} ${RealUserName} 2>/dev/null
 	done
 
