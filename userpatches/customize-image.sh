@@ -107,7 +107,7 @@ InstallLomorage() {
 	fi
 
 	# clean up and force password change on first boot
-	chage -d 0 root
+	# chage -d 0 root
 } # InstallLomorage
 
 InstallOpenMediaVault() {
